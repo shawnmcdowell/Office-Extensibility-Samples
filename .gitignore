@@ -42,7 +42,7 @@
 *.obj
 *.res
 
-# Visual Studio ignores
+# Visual Studio
 .vs/
 *.tlog/
 *.log
