@@ -10,6 +10,7 @@
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Compiled Dynamic libraries
 *.so
@@ -27,6 +28,25 @@
 *.lib
 
 # Executables
-*.exe
+# *.exe
 *.out
 *.app
+
+# Other interim built files
+*.exp
+*.ilk
+*.lib
+*.pdb
+*.ipdb
+*.idb
+*.obj
+*.res
+
+# Visual Studio ignores
+.vs/
+*.tlog/
+*.log
+
+# CSharp VS folders
+bin/
+obj/
