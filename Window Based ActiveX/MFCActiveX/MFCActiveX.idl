@@ -23,6 +23,7 @@ library MFCActiveXLib
 	{
 		properties:
 			[id(2), helpstring("property FloatProperty")] FLOAT FloatProperty;
+			[id(4)] VARIANT_BOOL UseDynamicDPIAwareCode;
 	methods:
 			[id(1), helpstring("method HelloWorld")] BSTR HelloWorld(void);
 			[id(3), helpstring("method GetProcessThreadID")] void GetProcessThreadID(LONG* pdwProcessId, LONG* pdwThreadId);
@@ -39,6 +40,7 @@ library MFCActiveXLib
 
         methods:
 			[id(1)] void FloatPropertyChanging(FLOAT NewValue, VARIANT_BOOL* Cancel);
+			[id(2)] void UseDynamicDPIAwareCodeChanging(VARIANT_BOOL newValue, VARIANT_BOOL* cancel);
 	};
 
 	//  Class information for CMFCActiveXCtrl

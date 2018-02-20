@@ -64,6 +64,8 @@ protected:
 // Dispatch and event IDs
 public:
 	enum {
+		eventidUseDynamicDPIAwareCodeChanging = 2L,
+		dispidUseDynamicDPIAwareCode = 4,
 		dispidGetProcessThreadID = 3L,
 		eventidFloatPropertyChanging = 1L,
 		dispidFloatProperty = 2,
@@ -74,6 +76,9 @@ public:
 protected:
 	// The float field used by FloatProperty
 	FLOAT m_fField;
+
+	// True to use the DDPI Aware code
+	BOOL m_UseDynamicDPIAwareCode;
 protected:
 	BSTR HelloWorld(void);
 	void GetProcessThreadID(LONG* pdwProcessId, LONG* pdwThreadId);
@@ -83,6 +88,13 @@ protected:
 	void FloatPropertyChanging(FLOAT NewValue, VARIANT_BOOL* Cancel)
 	{
 		FireEvent(eventidFloatPropertyChanging, EVENT_PARAM(VTS_R4 VTS_PBOOL), NewValue, Cancel);
+	}
+	VARIANT_BOOL GetUseDynamicDPIAwareCode();
+	void SetUseDynamicDPIAwareCode(VARIANT_BOOL newVal);
+
+	void UseDynamicDPIAwareCodeChanging(VARIANT_BOOL newValue, VARIANT_BOOL* cancel)
+	{
+		FireEvent(eventidUseDynamicDPIAwareCodeChanging, EVENT_PARAM(VTS_BOOL VTS_PBOOL), newValue, cancel);
 	}
 };
 

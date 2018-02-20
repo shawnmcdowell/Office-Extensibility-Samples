@@ -41,10 +41,13 @@ public:
 	static BOOL CALLBACK EnumChildProc(HWND hWnd, LPARAM lParam);
 
 	CStatic m_StaticFloatProperty;
+	CButton m_CheckUseDpi;
 
 private:
 	CEdit m_EditMessage;
 	CStatic m_StaticDPI;
 	UINT m_newDPI;
 	UINT m_currentDPI;
+public:
+	afx_msg void OnBnClickedCheck1();
 };

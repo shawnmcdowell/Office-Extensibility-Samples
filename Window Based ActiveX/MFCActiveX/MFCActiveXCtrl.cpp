@@ -47,6 +47,7 @@ BEGIN_DISPATCH_MAP(CMFCActiveXCtrl, COleControl)
 	DISP_FUNCTION_ID(CMFCActiveXCtrl, "HelloWorld", dispidHelloWorld, HelloWorld, VT_BSTR, VTS_NONE)
 	DISP_PROPERTY_EX_ID(CMFCActiveXCtrl, "FloatProperty", dispidFloatProperty, GetFloatProperty, SetFloatProperty, VT_R4)
 	DISP_FUNCTION_ID(CMFCActiveXCtrl, "GetProcessThreadID", dispidGetProcessThreadID, GetProcessThreadID, VT_EMPTY, VTS_PI4 VTS_PI4)
+	DISP_PROPERTY_EX_ID(CMFCActiveXCtrl, "UseDynamicDPIAwareCode", dispidUseDynamicDPIAwareCode, GetUseDynamicDPIAwareCode, SetUseDynamicDPIAwareCode, VT_BOOL)
 END_DISPATCH_MAP()
 
 
@@ -55,6 +56,7 @@ END_DISPATCH_MAP()
 
 BEGIN_EVENT_MAP(CMFCActiveXCtrl, COleControl)
 	EVENT_CUSTOM_ID("FloatPropertyChanging", eventidFloatPropertyChanging, FloatPropertyChanging, VTS_R4 VTS_PBOOL)
+	EVENT_CUSTOM_ID("UseDynamicDPIAwareCodeChanging", eventidUseDynamicDPIAwareCodeChanging, UseDynamicDPIAwareCodeChanging, VTS_BOOL VTS_PBOOL)
 END_EVENT_MAP()
 
 
@@ -169,7 +171,7 @@ BOOL CMFCActiveXCtrl::CMFCActiveXCtrlFactory::GetLicenseKey(DWORD dwReserved,
 
 // CMFCActiveXCtrl::CMFCActiveXCtrl - Constructor
 
-CMFCActiveXCtrl::CMFCActiveXCtrl() : m_fField(0.0f)
+CMFCActiveXCtrl::CMFCActiveXCtrl() : m_fField(0.0f), m_UseDynamicDPIAwareCode(VARIANT_FALSE)
 {
 	InitializeIIDs(&IID_DMFCActiveX, &IID_DMFCActiveXEvents);
 	// TODO: Initialize your control's instance data here.
@@ -341,4 +343,30 @@ void CMFCActiveXCtrl::GetProcessThreadID(LONG* pdwProcessId, LONG* pdwThreadId)
 	// TODO: Add your dispatch handler code here
 	*pdwProcessId = GetCurrentProcessId();
 	*pdwThreadId = GetCurrentThreadId();
+}
+
+
+VARIANT_BOOL CMFCActiveXCtrl::GetUseDynamicDPIAwareCode()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	return this->m_UseDynamicDPIAwareCode;
+}
+
+
+void CMFCActiveXCtrl::SetUseDynamicDPIAwareCode(VARIANT_BOOL newVal)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	VARIANT_BOOL cancel = VARIANT_FALSE;
+	UseDynamicDPIAwareCodeChanging(newVal, &cancel);
+	if (cancel == VARIANT_FALSE)
+	{
+		m_UseDynamicDPIAwareCode = (BOOL)newVal;
+		SetModifiedFlag();
+
+		m_MainDialog.m_CheckUseDpi.SetCheck(newVal == VARIANT_TRUE ? 1 : 0);
+	}
+
+
 }

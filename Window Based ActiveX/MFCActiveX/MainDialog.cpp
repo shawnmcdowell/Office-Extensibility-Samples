@@ -41,6 +41,7 @@ void CMainDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MSGBOX_EDIT, m_EditMessage);
 	DDX_Control(pDX, IDC_FLOATPROP_STATIC, m_StaticFloatProperty);
 	DDX_Control(pDX, IDC_DPI, m_StaticDPI);
+	DDX_Control(pDX, IDC_CHECK_USEDPI, m_CheckUseDpi);
 }
 
 
@@ -49,6 +50,7 @@ BEGIN_MESSAGE_MAP(CMainDialog, CDialog)
 	ON_BN_CLICKED(IDC_MSGBOX_BN, &CMainDialog::OnBnClickedMsgBoxBn)
 	ON_MESSAGE(WM_DPICHANGED, OnDPIMessage)
 	ON_WM_SIZE()
+	ON_BN_CLICKED(IDC_CHECK_USEDPI, &CMainDialog::OnBnClickedCheck1)
 END_MESSAGE_MAP()
 
 
@@ -98,10 +100,10 @@ BOOL CALLBACK CMainDialog::EnumChildProc(HWND hWnd, LPARAM lParam)
 		::ScreenToClient(::GetParent(hWnd), &pt);
 
 		::MoveWindow(hWnd,
-			pt.x*zoom,
-			pt.y*zoom,
-			(rect.right - rect.left)*zoom,
-			(rect.bottom - rect.top)*zoom,
+			static_cast<int>(pt.x*zoom),
+			static_cast<int>(pt.y*zoom),
+			static_cast<int>((rect.right - rect.left)*zoom),
+			static_cast<int>((rect.bottom - rect.top)*zoom),
 			TRUE);
 
 		ChangeWindowFontDPI(hWnd, _this->m_newDPI);
@@ -126,4 +128,10 @@ void CMainDialog::OnSize(UINT nType, int cx, int cy)
 	::EnumChildWindows(this->GetSafeHwnd(), EnumChildProc, (LPARAM)this);
 	m_currentDPI = m_newDPI;
 
+}
+
+
+void CMainDialog::OnBnClickedCheck1()
+{
+	// TODO: Add your control notification handler code here
 }

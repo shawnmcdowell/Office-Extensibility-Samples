@@ -44,7 +44,7 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "1 TYPELIB ""MFCActiveX.tlb""\r\n"
+    "1 TYPELIB ""MFCActiveXNotDPI.tlb""\r\n"
     "\0"
 END
 
@@ -76,9 +76,9 @@ BEGIN
             VALUE "CompanyName", "TODO: <Company name>"
             VALUE "FileDescription", "TODO: <File description>"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "MFCActiveX.ocx"
+            VALUE "InternalName", "MFCActiveXNotDPI.ocx"
             VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
-            VALUE "OriginalFilename", "MFCActiveX.ocx"
+            VALUE "OriginalFilename", "MFCActiveXNotDPI.ocx"
             VALUE "ProductName", "TODO: <Product name>"
             VALUE "ProductVersion", "1.0.0.1"
         END
@@ -170,8 +170,8 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_MFCACTIVEX          "MFCActiveX Control"
-    IDS_MFCACTIVEX_PPG      "MFCActiveX Property Page"
+    IDS_MFCACTIVEX          "MFCActiveX Not DPI Aware"
+    IDS_MFCACTIVEX_PPG      "MFCActiveX Not DPI Aware Property Page"
 END
 
 STRINGTABLE
@@ -189,7 +189,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-1 TYPELIB "MFCActiveX.tlb"
+1 TYPELIB "MFCActiveXNotDPI.tlb"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

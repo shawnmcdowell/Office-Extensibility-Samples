@@ -37,3 +37,4 @@
 #include <afxwin.h>
 #include <windows.h>
 
+#define TRACE OutputDebugString

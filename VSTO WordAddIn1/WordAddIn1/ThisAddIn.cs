@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using Word = Microsoft.Office.Interop.Word;
-using Office = Microsoft.Office.Core;
+﻿using SharedModule;
 using Microsoft.Office.Tools;
-using Microsoft.Office.Tools.Word;
 
 namespace WordAddIn1
 {
@@ -14,10 +7,8 @@ namespace WordAddIn1
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            UserControl1 user1 = new UserControl1();
-            CustomTaskPane myCustomTaskPane = this.CustomTaskPanes.Add(user1, "WinForm Add-in");
-            myCustomTaskPane.Visible = true;
-
+            SharedApp.InitAppTaskPanes(this.CustomTaskPanes);
+            SharedApp.AppTaskPanes.CreateTaskpaneInstance();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

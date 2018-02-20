@@ -27,8 +27,6 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 #pragma endregion
 
-#define TRACE OutputDebugString
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -77,9 +75,9 @@ END_PROPPAGEIDS(CMFCActiveXCtrl)
 
 // Initialize class factory and guid
 
-IMPLEMENT_OLECREATE_EX(CMFCActiveXCtrl, "MFCACTIVEX.MFCActiveXCtrl.1",
-	0xe389ad6c, 0x4fb6, 0x47af, 0xb0, 0x3a, 0xa5, 0xa5, 0xc6, 0xb2, 0xb8, 0x20)
-
+// {A039CAF5-6934-42D2-8456-E7A92D98FA07}
+IMPLEMENT_OLECREATE_EX(CMFCActiveXCtrl, "MFCACTIVEXNOTDPI.MFCActiveXCtrl.1",
+	0xa039caf5, 0x6934, 0x42d2, 0x84, 0x56, 0xe7, 0xa9, 0x2d, 0x98, 0xfa, 0x7);
 
 
 // Type library ID and version
@@ -90,10 +88,13 @@ IMPLEMENT_OLETYPELIB(CMFCActiveXCtrl, _tlid, _wVerMajor, _wVerMinor)
 
 // Interface IDs
 
+// {4C7FE461-74CD-4638-A1EE-1EAE3830953A}
 const IID BASED_CODE IID_DMFCActiveX =
-		{ 0x327DD42, 0x7A9E, 0x415B, { 0xB9, 0xA0, 0x4A, 0xEE, 0xE1, 0xA3, 0x31, 0x9E } };
+		{ 0x4c7fe461, 0x74cd, 0x4638,{ 0xa1, 0xee, 0x1e, 0xae, 0x38, 0x30, 0x95, 0x3a } };
+
+// {ED7A59CB-FAB3-48AA-A6D7-C42171F633B0}
 const IID BASED_CODE IID_DMFCActiveXEvents =
-		{ 0x97B9B2F3, 0xE95A, 0x49D4, { 0xAC, 0xA3, 0xE2, 0xA1, 0x81, 0x42, 0x4F, 0xD8 } };
+		{ 0xed7a59cb, 0xfab3, 0x48aa,{ 0xa6, 0xd7, 0xc4, 0x21, 0x71, 0xf6, 0x33, 0xb0 } };
 
 
 
@@ -141,7 +142,7 @@ BOOL CMFCActiveXCtrl::CMFCActiveXCtrlFactory::UpdateRegistry(BOOL bRegister)
 
 // Licensing strings
 
-static const TCHAR BASED_CODE _szLicFileName[] = _T("MFCActiveX.lic");
+static const TCHAR BASED_CODE _szLicFileName[] = _T("MFCActiveXNotDpi.lic");
 
 static const WCHAR BASED_CODE _szLicString[] =
 	L"Copyright (c) 2009 ";
@@ -339,7 +340,7 @@ void CMFCActiveXCtrl::SetDisplayValueProperty(CString newVal)
 			m_MainDialog.m_StaticDisplayValueProperty.SetWindowTextW(m_cstrField);
 		}
 		catch (int e) {
-			TRACE(L"Exception");
+			TRACE(L"Exception " + e);
 		}
 	}
 	// else, do nothing.

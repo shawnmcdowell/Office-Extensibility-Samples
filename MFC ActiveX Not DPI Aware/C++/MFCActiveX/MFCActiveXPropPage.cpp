@@ -39,9 +39,9 @@ END_MESSAGE_MAP()
 
 // Initialize class factory and guid
 
-IMPLEMENT_OLECREATE_EX(CMFCActiveXPropPage, "MFCACTIVEX.MFCActiveXPropPage.1",
-	0xc870c834, 0x7228, 0x40e2, 0x84, 0xe4, 0x96, 0xb3, 0x87, 0x24, 0xa1, 0x4b)
-
+// {1D490A55-70DD-4843-9BC5-9F84D973A115}
+IMPLEMENT_OLECREATE_EX(CMFCActiveXPropPage, "MFCACTIVEXNOTDPI.MFCActiveXPropPage.1",
+	0x1d490a55, 0x70dd, 0x4843, 0x9b, 0xc5, 0x9f, 0x84, 0xd9, 0x73, 0xa1, 0x15);
 
 
 // CMFCActiveXPropPage::CMFCActiveXPropPageFactory::UpdateRegistry -
