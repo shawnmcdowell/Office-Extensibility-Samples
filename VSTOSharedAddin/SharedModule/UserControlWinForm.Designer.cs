@@ -201,9 +201,9 @@ namespace SharedModule
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(8, 181);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(169, 20);
+            this.label5.Size = new System.Drawing.Size(159, 20);
             this.label5.TabIndex = 21;
-            this.label5.Text = "Taskpane Rect (hwnd)";
+            this.label5.Text = "Taskpane w,h (hwnd)";
             // 
             // txtTaskpaneRect
             // 
@@ -220,9 +220,9 @@ namespace SharedModule
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(8, 217);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(168, 20);
+            this.label6.Size = new System.Drawing.Size(158, 20);
             this.label6.TabIndex = 23;
-            this.label6.Text = "Container Rect (hwnd)";
+            this.label6.Text = "Container w,h (hwnd)";
             // 
             // txtContainerRect
             // 

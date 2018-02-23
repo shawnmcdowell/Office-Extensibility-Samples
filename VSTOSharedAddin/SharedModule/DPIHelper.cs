@@ -15,6 +15,13 @@ namespace SharedModule
             DPI_HOSTING_BEHAVIOR_DEFAULT = 0,
             DPI_HOSTING_BEHAVIOR_MIXED = 1
         }
+         public struct RECT
+        {
+             public int left;
+             public int top;
+             public int right;
+             public int bottom;
+        }
 
         [DllImport("SHCore.dll", SetLastError = true)]
         private static extern bool SetProcessDpiAwareness(PROCESS_DPI_AWARENESS awareness);
@@ -43,7 +50,7 @@ namespace SharedModule
         private static extern DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(IntPtr hWnd, ref Rectangle rect);
+        private static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetParent(IntPtr hWnd);
@@ -133,9 +140,9 @@ namespace SharedModule
             return DPIAwarenessText(Process.GetCurrentProcess().Handle, message);
         }
 
-        public static Rectangle GetWindowRectangle(IntPtr hWnd)
+        public static RECT GetWindowRectangle(IntPtr hWnd)
         {
-            Rectangle rect = Rectangle.Empty;
+            RECT rect = new RECT();
             GetWindowRect(hWnd, ref rect);
 
             return rect;

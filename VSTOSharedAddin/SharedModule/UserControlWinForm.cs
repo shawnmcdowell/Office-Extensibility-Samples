@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+using static SharedModule.DPIHelper;
 
 namespace SharedModule
 {
@@ -22,7 +23,6 @@ namespace SharedModule
 
             if (this.Handle != null)
             {
-                Debug.WriteLine("Toplevel context window hwnd={0}", this.Handle);
                 this.txtTaskpaneWindowAwareness.Text =
                     DPIHelper.GetWindowDpiAwareness(this.Handle).ToString();
             }
@@ -33,14 +33,21 @@ namespace SharedModule
             this.txtChildWindowMixedMode.Text =
                 DPIHelper.GetChildWindowMixedMode(this.Handle).ToString();
 
-            this.txtTaskpaneRect.Text =
-                String.Format("{0} ({1:X})", DPIHelper.GetWindowRectangle(hWndTaskpane).ToString(), hWndTaskpane.ToInt32());
-
-            this.txtContainerRect.Text =
-                String.Format("{0} ({1:X})", DPIHelper.GetWindowRectangle(hWndContainer).ToString(), hWndContainer.ToInt32());
-
-
+            this.txtTaskpaneRect.Text = HwndInfoString(hWndTaskpane);
+            this.txtContainerRect.Text = HwndInfoString(hWndContainer);
         }
+
+        private string HwndInfoString(IntPtr hWnd)
+        {
+            RECT r = DPIHelper.GetWindowRectangle(hWnd);
+
+            return String.Format("{0},{1} ({2:X}) (Parent {3:X})",
+            (r.right - r.left).ToString(),
+            (r.bottom - r.top).ToString(),
+            hWnd.ToInt64(),
+            DPIHelper.GetParentWindow(hWnd).ToInt64());
+        }
+
         public UserControlWinForm()
         {
             InitializeComponent();
