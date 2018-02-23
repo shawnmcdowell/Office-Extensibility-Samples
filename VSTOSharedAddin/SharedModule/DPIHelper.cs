@@ -15,19 +15,19 @@ namespace SharedModule
             DPI_HOSTING_BEHAVIOR_DEFAULT = 0,
             DPI_HOSTING_BEHAVIOR_MIXED = 1
         }
-         public struct RECT
+        public struct RECT
         {
-             public int left;
-             public int top;
-             public int right;
-             public int bottom;
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
         }
 
         [DllImport("SHCore.dll", SetLastError = true)]
-        private static extern bool SetProcessDpiAwareness(PROCESS_DPI_AWARENESS awareness);
+        private static extern bool SetProcessDpiAwareness(DPI_AWARENESS awareness);
 
         [DllImport("SHCore.dll", SetLastError = true)]
-        private static extern void GetProcessDpiAwareness(IntPtr hprocess, out PROCESS_DPI_AWARENESS awareness);
+        private static extern void GetProcessDpiAwareness(IntPtr hprocess, out DPI_AWARENESS awareness);
 
         [DllImport("User32.dll", SetLastError = true)]
         private static extern DPI_AWARENESS_CONTEXT SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT awareness);
@@ -58,19 +58,14 @@ namespace SharedModule
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int GetClassName(IntPtr hWnd, StringBuilder className, int charCount);
 
-        public enum PROCESS_DPI_AWARENESS
-        {
-            Process_DPI_Unaware = 0,
-            Process_System_DPI_Aware = 1,
-            Process_Per_Monitor_DPI_Aware = 2
-        }
+        private const uint DPI_AWARENESS_CONTEXT_HANDLE = 0;
 
-        public enum DPI_AWARENESS_CONTEXT
+        public enum DPI_AWARENESS_CONTEXT : uint
         {
-            DPI_AWARENESS_CONTEXT_UNAWARE = 16,
-            DPI_AWARENESS_CONTEXT_SYSTEM_AWARE = 17,
-            DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = 18,
-            DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = 34
+            DPI_AWARENESS_CONTEXT_UNAWARE = unchecked(DPI_AWARENESS_CONTEXT_HANDLE - 1),
+            DPI_AWARENESS_CONTEXT_SYSTEM_AWARE = unchecked(DPI_AWARENESS_CONTEXT_HANDLE - 2),
+            DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = unchecked(DPI_AWARENESS_CONTEXT_HANDLE - 3),
+            DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = unchecked(DPI_AWARENESS_CONTEXT_HANDLE - 4)
         }
 
         public enum DPI_AWARENESS
@@ -81,7 +76,7 @@ namespace SharedModule
             DPI_AWARENESS_PER_MONITOR_AWARE = 2
         }
 
-        public static bool SetDpiAwareness(PROCESS_DPI_AWARENESS awareness)
+        public static bool SetDpiAwareness(DPI_AWARENESS awareness)
         {
             return SetProcessDpiAwareness(awareness);
         }
@@ -91,14 +86,14 @@ namespace SharedModule
             return SetThreadDpiAwarenessContext(awareness);
         }
 
-        public static PROCESS_DPI_AWARENESS GetProcessDpi()
+        public static DPI_AWARENESS GetProcessDpi()
         {
             return GetProcessDpi(Process.GetCurrentProcess().Handle);
         }
 
-        public static PROCESS_DPI_AWARENESS GetProcessDpi(IntPtr hprocess)
+        public static DPI_AWARENESS GetProcessDpi(IntPtr hprocess)
         {
-            PROCESS_DPI_AWARENESS awareness;
+            DPI_AWARENESS awareness;
             GetProcessDpiAwareness(hprocess, out awareness);
             return awareness;
         }
