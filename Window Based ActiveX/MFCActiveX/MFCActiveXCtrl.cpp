@@ -196,8 +196,12 @@ void CMFCActiveXCtrl::OnDraw(
 	if (!pdc)
 		return;
 
-	// To size the main dialog window and fill the background
-	m_MainDialog.MoveWindow(rcBounds, TRUE);
+	if (m_MainDialog) 
+	{
+		// To size the main dialog window and fill the background
+		m_MainDialog.MoveWindow(rcBounds, TRUE);
+	}
+
 	CBrush brBackGnd(TranslateColor(AmbientBackColor()));
 	pdc->FillRect(rcBounds, &brBackGnd);
 
@@ -320,10 +324,10 @@ void CMFCActiveXCtrl::SetFloatProperty(FLOAT newVal)
 	// TODO: Add your property handler code here
 	
 	// Fire the event, FloatPropertyChanging
-	VARIANT_BOOL cancel = VARIANT_FALSE; 
-	FloatPropertyChanging(newVal, &cancel);
+	VARIANT_BOOL* cancel = new VARIANT_BOOL(VARIANT_FALSE);
+	FloatPropertyChanging(newVal, cancel);
 
-	if (cancel == VARIANT_FALSE)
+	if (*cancel == VARIANT_FALSE)
 	{
 		m_fField = newVal;	// Save the new value
 		SetModifiedFlag();
@@ -358,15 +362,13 @@ void CMFCActiveXCtrl::SetUseDynamicDPIAwareCode(VARIANT_BOOL newVal)
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
-	VARIANT_BOOL cancel = VARIANT_FALSE;
-	UseDynamicDPIAwareCodeChanging(newVal, &cancel);
-	if (cancel == VARIANT_FALSE)
+	VARIANT_BOOL* cancel = new VARIANT_BOOL(VARIANT_FALSE);
+	UseDynamicDPIAwareCodeChanging(newVal, cancel);
+	if (*cancel == VARIANT_FALSE)
 	{
 		m_UseDynamicDPIAwareCode = (BOOL)newVal;
 		SetModifiedFlag();
 
-		m_MainDialog.m_CheckUseDpi.SetCheck(newVal == VARIANT_TRUE ? 1 : 0);
+		m_MainDialog.m_CheckUseDpi.SetCheck(m_UseDynamicDPIAwareCode ? 1 : 0);
 	}
-
-
 }

@@ -33,6 +33,7 @@ IMPLEMENT_DYNCREATE(CMFCActiveXPropPage, COlePropertyPage)
 // Message map
 
 BEGIN_MESSAGE_MAP(CMFCActiveXPropPage, COlePropertyPage)
+	ON_BN_CLICKED(IDC_CHECK_USEDPI, &CMFCActiveXPropPage::OnBnClickedCheckUsedpi)
 END_MESSAGE_MAP()
 
 
@@ -71,9 +72,14 @@ CMFCActiveXPropPage::CMFCActiveXPropPage() :
 
 void CMFCActiveXPropPage::DoDataExchange(CDataExchange* pDX)
 {
+	DDP_Check(pDX, IDC_CHECK_USEDPI, m_CheckUseDpi, _T("Use DDPI Code"));
+
 	DDP_PostProcessing(pDX);
 }
 
-
-
 // CMFCActiveXPropPage message handlers
+
+
+void CMFCActiveXPropPage::OnBnClickedCheckUsedpi()
+{
+}

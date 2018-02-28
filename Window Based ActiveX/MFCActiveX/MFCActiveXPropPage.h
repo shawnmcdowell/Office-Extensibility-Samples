@@ -30,6 +30,8 @@ public:
 // Dialog Data
 	enum { IDD = IDD_PROPPAGE_MFCACTIVEX };
 
+	int m_CheckUseDpi;
+
 // Implementation
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -37,5 +39,7 @@ protected:
 // Message maps
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedCheckUsedpi();
 };
 

@@ -16,10 +16,11 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #include "stdafx.h"
 #include "MFCActiveX.h"
 #include "MainDialog.h"
+#include "MFCActiveXCtrl.h"
 #pragma endregion
 
 const int DESIRED_HEIGHT = 9;
-#define   DESIRED_FONT_NAME L"Areal"
+#define   DESIRED_FONT_NAME L"Arial"
 
 // CMainDialog dialog
 
@@ -116,12 +117,12 @@ void CMainDialog::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
 
-	CString strDPI;
-	strDPI.Format(_T("OnSize DPI: %d"), ::GetDpiForWindow(this->GetSafeHwnd()));
-	m_StaticDPI.SetWindowTextW(strDPI);
-
 	m_newDPI = ::GetDpiForWindow(this->GetSafeHwnd());
-	if (!m_currentDPI)
+	CString strDPI;
+	strDPI.Format(_T("OnSize DPI: %d"), m_newDPI);
+	if (m_StaticDPI) m_StaticDPI.SetWindowTextW(strDPI);
+
+	if (!m_currentDPI || m_currentDPI != m_newDPI)
 	{
 		m_currentDPI = m_newDPI;
 	}
@@ -133,5 +134,5 @@ void CMainDialog::OnSize(UINT nType, int cx, int cy)
 
 void CMainDialog::OnBnClickedCheck1()
 {
-	// TODO: Add your control notification handler code here
+	// m_CheckUseDpi
 }

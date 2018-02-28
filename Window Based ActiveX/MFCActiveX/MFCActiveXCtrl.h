@@ -71,7 +71,10 @@ public:
 		dispidFloatProperty = 2,
 		dispidHelloWorld = 2L,
 	};
+
 	CMainDialog m_MainDialog;
+	BOOL m_fUseDDPICode = false;
+
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 protected:
 	// The float field used by FloatProperty
@@ -95,6 +98,9 @@ protected:
 	void UseDynamicDPIAwareCodeChanging(VARIANT_BOOL newValue, VARIANT_BOOL* cancel)
 	{
 		FireEvent(eventidUseDynamicDPIAwareCodeChanging, EVENT_PARAM(VTS_BOOL VTS_PBOOL), newValue, cancel);
+
+		// HACK: cancel is always coming back as 1 (at least on 64 bit).  Possibly param passing issue with MFC?
+		cancel = VARIANT_FALSE;
 	}
 };
 

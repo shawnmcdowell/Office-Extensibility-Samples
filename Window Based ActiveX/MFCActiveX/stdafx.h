@@ -35,4 +35,3 @@
 
 #endif // _WIN64
 #include <afxwin.h>
-

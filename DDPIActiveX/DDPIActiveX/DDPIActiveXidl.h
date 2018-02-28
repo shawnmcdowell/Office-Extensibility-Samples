@@ -6,7 +6,7 @@
  /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 19:14:07 2038
  */
-/* Compiler settings for MFCActiveX.idl:
+/* Compiler settings for DDPIActiveX.idl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
@@ -31,8 +31,8 @@
 #endif /* __RPCNDR_H_VERSION__ */
 
 
-#ifndef __MFCActiveXidl_h__
-#define __MFCActiveXidl_h__
+#ifndef __DDPIActiveXidl_h__
+#define __DDPIActiveXidl_h__
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -40,30 +40,30 @@
 
 /* Forward Declarations */ 
 
-#ifndef ___DMFCActiveX_FWD_DEFINED__
-#define ___DMFCActiveX_FWD_DEFINED__
-typedef interface _DMFCActiveX _DMFCActiveX;
+#ifndef ___DDDPIActiveX_FWD_DEFINED__
+#define ___DDDPIActiveX_FWD_DEFINED__
+typedef interface _DDDPIActiveX _DDDPIActiveX;
 
-#endif 	/* ___DMFCActiveX_FWD_DEFINED__ */
-
-
-#ifndef ___DMFCActiveXEvents_FWD_DEFINED__
-#define ___DMFCActiveXEvents_FWD_DEFINED__
-typedef interface _DMFCActiveXEvents _DMFCActiveXEvents;
-
-#endif 	/* ___DMFCActiveXEvents_FWD_DEFINED__ */
+#endif 	/* ___DDDPIActiveX_FWD_DEFINED__ */
 
 
-#ifndef __MFCActiveX_FWD_DEFINED__
-#define __MFCActiveX_FWD_DEFINED__
+#ifndef ___DDDPIActiveXEvents_FWD_DEFINED__
+#define ___DDDPIActiveXEvents_FWD_DEFINED__
+typedef interface _DDDPIActiveXEvents _DDDPIActiveXEvents;
+
+#endif 	/* ___DDDPIActiveXEvents_FWD_DEFINED__ */
+
+
+#ifndef __DDPIActiveX_FWD_DEFINED__
+#define __DDPIActiveX_FWD_DEFINED__
 
 #ifdef __cplusplus
-typedef class MFCActiveX MFCActiveX;
+typedef class DDPIActiveX DDPIActiveX;
 #else
-typedef struct MFCActiveX MFCActiveX;
+typedef struct DDPIActiveX DDPIActiveX;
 #endif /* __cplusplus */
 
-#endif 	/* __MFCActiveX_FWD_DEFINED__ */
+#endif 	/* __DDPIActiveX_FWD_DEFINED__ */
 
 
 #ifdef __cplusplus
@@ -71,7 +71,7 @@ extern "C"{
 #endif 
 
 
-/* interface __MIDL_itf_MFCActiveX_0000_0000 */
+/* interface __MIDL_itf_DDPIActiveX_0000_0000 */
 /* [local] */ 
 
 #pragma warning(push)
@@ -86,65 +86,65 @@ extern "C"{
 #pragma endregion
 
 
-extern RPC_IF_HANDLE __MIDL_itf_MFCActiveX_0000_0000_v0_0_c_ifspec;
-extern RPC_IF_HANDLE __MIDL_itf_MFCActiveX_0000_0000_v0_0_s_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_DDPIActiveX_0000_0000_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_DDPIActiveX_0000_0000_v0_0_s_ifspec;
 
 
-#ifndef __MFCActiveXLib_LIBRARY_DEFINED__
-#define __MFCActiveXLib_LIBRARY_DEFINED__
+#ifndef __DDPIActiveXLib_LIBRARY_DEFINED__
+#define __DDPIActiveXLib_LIBRARY_DEFINED__
 
-/* library MFCActiveXLib */
-/* [control][helpstring][helpfile][version][uuid] */ 
-
-
-EXTERN_C const IID LIBID_MFCActiveXLib;
-
-#ifndef ___DMFCActiveX_DISPINTERFACE_DEFINED__
-#define ___DMFCActiveX_DISPINTERFACE_DEFINED__
-
-/* dispinterface _DMFCActiveX */
-/* [helpstring][uuid] */ 
+/* library DDPIActiveXLib */
+/* [control][version][uuid] */ 
 
 
-EXTERN_C const IID DIID__DMFCActiveX;
+EXTERN_C const IID LIBID_DDPIActiveXLib;
+
+#ifndef ___DDDPIActiveX_DISPINTERFACE_DEFINED__
+#define ___DDDPIActiveX_DISPINTERFACE_DEFINED__
+
+/* dispinterface _DDDPIActiveX */
+/* [uuid] */ 
+
+
+EXTERN_C const IID DIID__DDDPIActiveX;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
 
-    MIDL_INTERFACE("0327DD42-7A9E-415B-B9A0-4AEEE1A3319E")
-    _DMFCActiveX : public IDispatch
+    MIDL_INTERFACE("fff12b99-09e3-468f-90e9-41e1122646e2")
+    _DDDPIActiveX : public IDispatch
     {
     };
     
 #else 	/* C style interface */
 
-    typedef struct _DMFCActiveXVtbl
+    typedef struct _DDDPIActiveXVtbl
     {
         BEGIN_INTERFACE
         
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            _DMFCActiveX * This,
+            _DDDPIActiveX * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            _DMFCActiveX * This);
+            _DDDPIActiveX * This);
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            _DMFCActiveX * This);
+            _DDDPIActiveX * This);
         
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
-            _DMFCActiveX * This,
+            _DDDPIActiveX * This,
             /* [out] */ UINT *pctinfo);
         
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
-            _DMFCActiveX * This,
+            _DDDPIActiveX * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
-            _DMFCActiveX * This,
+            _DDDPIActiveX * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
             /* [range][in] */ UINT cNames,
@@ -152,7 +152,7 @@ EXTERN_C const IID DIID__DMFCActiveX;
             /* [size_is][out] */ DISPID *rgDispId);
         
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
-            _DMFCActiveX * This,
+            _DDDPIActiveX * This,
             /* [annotation][in] */ 
             _In_  DISPID dispIdMember,
             /* [annotation][in] */ 
@@ -171,11 +171,11 @@ EXTERN_C const IID DIID__DMFCActiveX;
             _Out_opt_  UINT *puArgErr);
         
         END_INTERFACE
-    } _DMFCActiveXVtbl;
+    } _DDDPIActiveXVtbl;
 
-    interface _DMFCActiveX
+    interface _DDDPIActiveX
     {
-        CONST_VTBL struct _DMFCActiveXVtbl *lpVtbl;
+        CONST_VTBL struct _DDDPIActiveXVtbl *lpVtbl;
     };
 
     
@@ -183,26 +183,26 @@ EXTERN_C const IID DIID__DMFCActiveX;
 #ifdef COBJMACROS
 
 
-#define _DMFCActiveX_QueryInterface(This,riid,ppvObject)	\
+#define _DDDPIActiveX_QueryInterface(This,riid,ppvObject)	\
     ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
 
-#define _DMFCActiveX_AddRef(This)	\
+#define _DDDPIActiveX_AddRef(This)	\
     ( (This)->lpVtbl -> AddRef(This) ) 
 
-#define _DMFCActiveX_Release(This)	\
+#define _DDDPIActiveX_Release(This)	\
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define _DMFCActiveX_GetTypeInfoCount(This,pctinfo)	\
+#define _DDDPIActiveX_GetTypeInfoCount(This,pctinfo)	\
     ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
 
-#define _DMFCActiveX_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
+#define _DDDPIActiveX_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
     ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
 
-#define _DMFCActiveX_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
+#define _DDDPIActiveX_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
     ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
 
-#define _DMFCActiveX_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
+#define _DDDPIActiveX_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
     ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 #endif /* COBJMACROS */
@@ -211,55 +211,55 @@ EXTERN_C const IID DIID__DMFCActiveX;
 #endif 	/* C style interface */
 
 
-#endif 	/* ___DMFCActiveX_DISPINTERFACE_DEFINED__ */
+#endif 	/* ___DDDPIActiveX_DISPINTERFACE_DEFINED__ */
 
 
-#ifndef ___DMFCActiveXEvents_DISPINTERFACE_DEFINED__
-#define ___DMFCActiveXEvents_DISPINTERFACE_DEFINED__
+#ifndef ___DDDPIActiveXEvents_DISPINTERFACE_DEFINED__
+#define ___DDDPIActiveXEvents_DISPINTERFACE_DEFINED__
 
-/* dispinterface _DMFCActiveXEvents */
-/* [helpstring][uuid] */ 
+/* dispinterface _DDDPIActiveXEvents */
+/* [uuid] */ 
 
 
-EXTERN_C const IID DIID__DMFCActiveXEvents;
+EXTERN_C const IID DIID__DDDPIActiveXEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
 
-    MIDL_INTERFACE("97B9B2F3-E95A-49D4-ACA3-E2A181424FD8")
-    _DMFCActiveXEvents : public IDispatch
+    MIDL_INTERFACE("780478ee-97ef-479f-b269-4b22b96f0f33")
+    _DDDPIActiveXEvents : public IDispatch
     {
     };
     
 #else 	/* C style interface */
 
-    typedef struct _DMFCActiveXEventsVtbl
+    typedef struct _DDDPIActiveXEventsVtbl
     {
         BEGIN_INTERFACE
         
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            _DMFCActiveXEvents * This,
+            _DDDPIActiveXEvents * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            _DMFCActiveXEvents * This);
+            _DDDPIActiveXEvents * This);
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            _DMFCActiveXEvents * This);
+            _DDDPIActiveXEvents * This);
         
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
-            _DMFCActiveXEvents * This,
+            _DDDPIActiveXEvents * This,
             /* [out] */ UINT *pctinfo);
         
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
-            _DMFCActiveXEvents * This,
+            _DDDPIActiveXEvents * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
-            _DMFCActiveXEvents * This,
+            _DDDPIActiveXEvents * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
             /* [range][in] */ UINT cNames,
@@ -267,7 +267,7 @@ EXTERN_C const IID DIID__DMFCActiveXEvents;
             /* [size_is][out] */ DISPID *rgDispId);
         
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
-            _DMFCActiveXEvents * This,
+            _DDDPIActiveXEvents * This,
             /* [annotation][in] */ 
             _In_  DISPID dispIdMember,
             /* [annotation][in] */ 
@@ -286,11 +286,11 @@ EXTERN_C const IID DIID__DMFCActiveXEvents;
             _Out_opt_  UINT *puArgErr);
         
         END_INTERFACE
-    } _DMFCActiveXEventsVtbl;
+    } _DDDPIActiveXEventsVtbl;
 
-    interface _DMFCActiveXEvents
+    interface _DDDPIActiveXEvents
     {
-        CONST_VTBL struct _DMFCActiveXEventsVtbl *lpVtbl;
+        CONST_VTBL struct _DDDPIActiveXEventsVtbl *lpVtbl;
     };
 
     
@@ -298,26 +298,26 @@ EXTERN_C const IID DIID__DMFCActiveXEvents;
 #ifdef COBJMACROS
 
 
-#define _DMFCActiveXEvents_QueryInterface(This,riid,ppvObject)	\
+#define _DDDPIActiveXEvents_QueryInterface(This,riid,ppvObject)	\
     ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
 
-#define _DMFCActiveXEvents_AddRef(This)	\
+#define _DDDPIActiveXEvents_AddRef(This)	\
     ( (This)->lpVtbl -> AddRef(This) ) 
 
-#define _DMFCActiveXEvents_Release(This)	\
+#define _DDDPIActiveXEvents_Release(This)	\
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define _DMFCActiveXEvents_GetTypeInfoCount(This,pctinfo)	\
+#define _DDDPIActiveXEvents_GetTypeInfoCount(This,pctinfo)	\
     ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
 
-#define _DMFCActiveXEvents_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
+#define _DDDPIActiveXEvents_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
     ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
 
-#define _DMFCActiveXEvents_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
+#define _DDDPIActiveXEvents_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
     ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
 
-#define _DMFCActiveXEvents_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
+#define _DDDPIActiveXEvents_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
     ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 #endif /* COBJMACROS */
@@ -326,17 +326,17 @@ EXTERN_C const IID DIID__DMFCActiveXEvents;
 #endif 	/* C style interface */
 
 
-#endif 	/* ___DMFCActiveXEvents_DISPINTERFACE_DEFINED__ */
+#endif 	/* ___DDDPIActiveXEvents_DISPINTERFACE_DEFINED__ */
 
 
-EXTERN_C const CLSID CLSID_MFCActiveX;
+EXTERN_C const CLSID CLSID_DDPIActiveX;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("E389AD6C-4FB6-47AF-B03A-A5A5C6B2B820")
-MFCActiveX;
+class DECLSPEC_UUID("253a1346-9adb-4781-beaf-f6cf24cb2ed1")
+DDPIActiveX;
 #endif
-#endif /* __MFCActiveXLib_LIBRARY_DEFINED__ */
+#endif /* __DDPIActiveXLib_LIBRARY_DEFINED__ */
 
 /* Additional Prototypes for ALL interfaces */
 
