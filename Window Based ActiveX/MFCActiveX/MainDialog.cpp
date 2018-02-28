@@ -122,17 +122,26 @@ void CMainDialog::OnSize(UINT nType, int cx, int cy)
 	strDPI.Format(_T("OnSize DPI: %d"), m_newDPI);
 	if (m_StaticDPI) m_StaticDPI.SetWindowTextW(strDPI);
 
-	if (!m_currentDPI || m_currentDPI != m_newDPI)
+	if (!m_currentDPI)
 	{
 		m_currentDPI = m_newDPI;
 	}
-	::EnumChildWindows(this->GetSafeHwnd(), EnumChildProc, (LPARAM)this);
-	m_currentDPI = m_newDPI;
 
+	if (UseDDpiCode())
+	{
+		::EnumChildWindows(this->GetSafeHwnd(), EnumChildProc, (LPARAM)this);
+	}
+
+	m_currentDPI = m_newDPI;
 }
 
 
 void CMainDialog::OnBnClickedCheck1()
 {
 	// m_CheckUseDpi
+}
+
+BOOL CMainDialog::UseDDpiCode()
+{
+	return m_CheckUseDpi ? m_CheckUseDpi.GetState() == BST_CHECKED : false;
 }

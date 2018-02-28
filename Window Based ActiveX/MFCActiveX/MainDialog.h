@@ -48,6 +48,10 @@ private:
 	CStatic m_StaticDPI;
 	UINT m_newDPI;
 	UINT m_currentDPI;
+
+	BOOL UseDDpiCode();
+
 public:
 	afx_msg void OnBnClickedCheck1();
+
 };
