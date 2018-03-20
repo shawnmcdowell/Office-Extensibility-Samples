@@ -19,9 +19,9 @@ namespace SharedModule
             }
         }
 
-        public static void InitAppTaskPanes(CustomTaskPaneCollection value)
+        public static void InitAppTaskPanes(ref CustomTaskPaneCollection value)
         {
-            m_taskPanes = new TaskPanes(value);
+            m_taskPanes = new TaskPanes(ref value);
         }
     }
 }

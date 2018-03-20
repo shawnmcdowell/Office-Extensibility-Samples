@@ -15,7 +15,9 @@ namespace ExcelAddIn1
         {
             ExcelApp = Globals.ThisAddIn.Application;
 
-            SharedApp.InitAppTaskPanes(this.CustomTaskPanes);
+            DPIHelper.SetChildWindowMixedMode(DPIHelper.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_DEFAULT);
+
+            SharedApp.InitAppTaskPanes(ref this.CustomTaskPanes);
             SharedApp.AppTaskPanes.CreateTaskpaneInstance();
 
             //ExcelApp.WorkbookBeforeSave += new Microsoft.Office.Interop.Excel.AppEvents_WorkbookBeforeSaveEventHandler(Application_WorkbookBeforeSave);

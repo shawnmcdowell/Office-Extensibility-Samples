@@ -64,26 +64,26 @@ namespace SharedModule
 
         private void btnSATaskpane_Click(object sender, EventArgs e)
         {
-            SetThreadDPI(DPIHelper.DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
+            SetThreadDPI(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
             SharedApp.AppTaskPanes.CreateTaskpaneInstance();
         }
 
         private void btnSAForm_Click(object sender, EventArgs e)
         {
-            SetThreadDPI(DPIHelper.DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
+            SetThreadDPI(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
             Form f1 = new Form1();
             f1.Show();
         }
 
         private void btnCreatePMAV2Taskpane_Click(object sender, EventArgs e)
         {
-            SetThreadDPI(DPIHelper.DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2, false);
+            SetThreadDPI(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2, false);
             SharedApp.AppTaskPanes.CreateTaskpaneInstance();
         }
 
         private void btnOpenNonModalSA_Click(object sender, EventArgs e)
         {
-            SetThreadDPI(DPIHelper.DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
+            SetThreadDPI(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
             Form f1 = new Form1();
             f1.Show();
         }
@@ -106,13 +106,13 @@ namespace SharedModule
             }
         }
 
-        private void SetThreadDPI(DPIHelper.DPI_AWARENESS_CONTEXT newvalue)
+        private void SetThreadDPI(DPI_AWARENESS_CONTEXT newvalue)
         {
             SetThreadDPI(newvalue, true);
         }
-        private void SetThreadDPI(DPIHelper.DPI_AWARENESS_CONTEXT newvalue, bool showMessage)
+        private void SetThreadDPI(DPI_AWARENESS_CONTEXT newvalue, bool showMessage)
         {
-            DPIHelper.DPI_AWARENESS_CONTEXT previous =
+            DPI_AWARENESS_CONTEXT previous =
                 DPIHelper.SetThreadDpiAwareness(newvalue);
             int processId = Process.GetCurrentProcess().Id;
             int threadId = Thread.CurrentThread.ManagedThreadId;

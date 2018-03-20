@@ -7,7 +7,7 @@ namespace SharedModule
     {
         private CustomTaskPaneCollection m_tpc;
 
-        public TaskPanes(CustomTaskPaneCollection taskPanes)
+        public TaskPanes(ref CustomTaskPaneCollection taskPanes)
         {
             m_tpc = taskPanes;
         }
@@ -18,7 +18,7 @@ namespace SharedModule
 
             // Add a custom taskpane - Win Form
             UserControlWinForm myUserControl1 = new UserControlWinForm();
-            myCustomTaskPane = m_tpc.Add(myUserControl1, "DDPI Custom Taskpane");
+            myCustomTaskPane = m_tpc.Add(myUserControl1, string.Format("DDPI Custom Taskpane {0}", m_tpc.Count + 1));
             myCustomTaskPane.Width = 700;
             myCustomTaskPane.Visible = true;
         }

@@ -7,7 +7,7 @@ namespace WordAddIn1
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            SharedApp.InitAppTaskPanes(this.CustomTaskPanes);
+            SharedApp.InitAppTaskPanes(ref this.CustomTaskPanes);
             SharedApp.AppTaskPanes.CreateTaskpaneInstance();
         }
 
