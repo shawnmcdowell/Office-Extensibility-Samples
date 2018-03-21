@@ -4,8 +4,20 @@
 // This file will be processed by the MIDL tool to
 // produce the type library (AddIn.tlb) and marshalling code.
 
+#include "olectl.h"
 import "oaidl.idl";
 import "ocidl.idl";
+
+[
+	object,
+	uuid(0ad3222c-0454-400e-abde-47f3101f51df),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IATLControl : IDispatch
+{
+};
 
 [
 	uuid(7B2B42E3-BA6D-41FE-97A9-94F473C1B2A6),
@@ -22,5 +34,14 @@ library COMAddinCPPLib
 	coclass Connect
 	{
 		[default] interface IUnknown;
+	};
+	
+	[
+		uuid(a8fe7cbc-49c4-402f-97cc-754f0f8956df),
+		control
+	]
+	coclass ATLControl
+	{
+		[default] interface IATLControl;
 	};
 };

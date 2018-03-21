@@ -24,3 +24,39 @@ HKCR
 		}
 	}
 }
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove Office
+			{
+				NoRemove Excel
+				{
+					NoRemove Addins
+					{
+						ForceRemove COMAddinCPP.Connect.1
+						{
+							val Description = s 'COM Add-in C++, with Custom TaskPane, created in VS 2005'
+							val FriendlyName = s 'COM Add-in C++ with Custom TaskPane'
+							val LoadBehavior = d '2'
+						}
+					}
+				}
+				NoRemove Word
+				{
+					NoRemove Addins
+					{
+						ForceRemove COMAddinCPP.Connect.1
+						{
+							val Description = s 'COM Add-in C++, with Custom TaskPane, created in VS 2005'
+							val FriendlyName = s 'COM Add-in C++ with Custom TaskPane'
+							val LoadBehavior = d '2'
+						}
+					}
+				}
+			}
+		}
+	}
+}

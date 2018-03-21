@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "AddIn.h"
 #include "Connect.h"
+#include <string>
 
 extern CAddInModule _AtlModule;
 
@@ -42,4 +43,27 @@ STDMETHODIMP CConnect::OnStartupComplete (SAFEARRAY ** /*custom*/ )
 STDMETHODIMP CConnect::OnBeginShutdown (SAFEARRAY ** /*custom*/ )
 {
 	return S_OK;
+}
+
+STDMETHODIMP CConnect::CTPFactoryAvailable(ICTPFactory * CTPFactoryInst)
+{
+
+	_CustomTaskPane* pTaskPane = NULL;
+	HRESULT hr = S_OK;
+
+	VARIANTARG vargParentWindow;
+	vargParentWindow.vt = VT_ERROR;
+	vargParentWindow.scode = DISP_E_PARAMNOTFOUND;
+
+	BSTR axControlID = L"COMAddinCPP.ATLControl";
+	hr = CTPFactoryInst->CreateCTP(
+		axControlID,
+		CComBSTR(L"COM Add-in C++"), vargParentWindow, &pTaskPane);
+
+	if (SUCCEEDED(hr))
+	{
+		hr = pTaskPane->put_Visible(TRUE);
+	}
+
+	return hr;
 }

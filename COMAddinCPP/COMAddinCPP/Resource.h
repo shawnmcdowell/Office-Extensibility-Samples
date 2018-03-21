@@ -5,6 +5,8 @@
 #define IDS_PROJNAME                    100
 #define IDR_ADDIN                       101
 #define IDR_CONNECT                     102
+#define IDB_ATLCONTROL                  106
+#define IDR_ATLCONTROL                  107
 
 // Next default values for new objects
 // 
