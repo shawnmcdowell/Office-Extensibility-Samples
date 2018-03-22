@@ -40,7 +40,7 @@ HKCU
 						{
 							val Description = s 'COM Add-in C++, with Custom TaskPane, created in VS 2005'
 							val FriendlyName = s 'COM Add-in C++ with Custom TaskPane'
-							val LoadBehavior = d '2'
+							val LoadBehavior = d '3'
 						}
 					}
 				}
@@ -52,7 +52,7 @@ HKCU
 						{
 							val Description = s 'COM Add-in C++, with Custom TaskPane, created in VS 2005'
 							val FriendlyName = s 'COM Add-in C++ with Custom TaskPane'
-							val LoadBehavior = d '2'
+							val LoadBehavior = d '3'
 						}
 					}
 				}

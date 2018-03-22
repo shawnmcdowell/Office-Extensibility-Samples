@@ -3,7 +3,7 @@
 // c:\git\comaddincpp\x64\debug\mso.tlh
 //
 // C++ source equivalent of Win32 type library C:\Program Files\Microsoft Office\Root\VFS\ProgramFilesCommonX86\Microsoft Shared\OFFICE16\MSO.DLL
-// compiler-generated file created 03/20/18 at 17:49:45 - DO NOT EDIT!
+// compiler-generated file created 03/22/18 at 01:01:45 - DO NOT EDIT!
 
 #pragma once
 #pragma pack(push, 8)

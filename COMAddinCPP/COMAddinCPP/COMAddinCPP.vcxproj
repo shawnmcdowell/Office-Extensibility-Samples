@@ -259,6 +259,7 @@
     <ClCompile Include="AddIn.cpp" />
     <ClCompile Include="ATLControl.cpp" />
     <ClCompile Include="Connect.cpp" />
+    <ClCompile Include="DPIHelper.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -284,6 +285,7 @@
     <ClInclude Include="AddIn.h" />
     <ClInclude Include="ATLControl.h" />
     <ClInclude Include="Connect.h" />
+    <ClInclude Include="DPIHelper.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
