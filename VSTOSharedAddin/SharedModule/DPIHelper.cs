@@ -91,6 +91,15 @@ namespace SharedModule
         public static readonly DPI_AWARENESS_CONTEXT DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = DPI_AWARENESS_CONTEXT_HANDLE - 3;
         public static readonly DPI_AWARENESS_CONTEXT DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = DPI_AWARENESS_CONTEXT_HANDLE - 4;
 
+        public static DPI_AWARENESS_CONTEXT[] DpiAwarenessContexts =
+        {
+            DPI_AWARENESS_CONTEXT_UNAWARE,
+            DPI_AWARENESS_CONTEXT_SYSTEM_AWARE,
+            DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE,
+            DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
+        };
+
+
         public enum DPI_AWARENESS
         {
             DPI_AWARENESS_INVALID = -1,
@@ -112,6 +121,8 @@ namespace SharedModule
             public int right;
             public int bottom;
         }
+
+        public const uint GA_ROOT = 2;
 
         [DllImport("SHCore.dll", SetLastError = true)]
         private static extern bool SetProcessDpiAwareness(DPI_AWARENESS awareness);
@@ -137,8 +148,8 @@ namespace SharedModule
         [DllImport("User32.dll", SetLastError = true)]
         private static extern DPI_HOSTING_BEHAVIOR SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR dpiHostingBehavior);
 
-        [DllImport("User32.dll", SetLastError = true)]
-        private static extern DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior(IntPtr hWnd);
+        [DllImport("User32.dll", SetLastError = true, EntryPoint = "GetThreadDpiHostingBehavior")]
+        private static extern DPI_HOSTING_BEHAVIOR _GetThreadDpiHostingBehavior(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         private static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
@@ -148,6 +159,9 @@ namespace SharedModule
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int GetClassName(IntPtr hWnd, StringBuilder className, int charCount);
+
+        [DllImport("user32.dll", EntryPoint = "GetAncestor")]
+        private static extern IntPtr _GetAncestor(IntPtr hWnd, uint gaFlags);
 
         public static bool SetDpiAwareness(DPI_AWARENESS awareness)
         {
@@ -187,9 +201,9 @@ namespace SharedModule
             return SetThreadDpiHostingBehavior(value);
         }
 
-        public static DPI_HOSTING_BEHAVIOR GetChildWindowMixedMode(IntPtr hWnd)
+        public static DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior(IntPtr hWnd)
         {
-            return GetThreadDpiHostingBehavior(hWnd);
+            return _GetThreadDpiHostingBehavior(hWnd);
         }
 
         public static void DebugPrintDPIAwareness(IntPtr hprocess, string message)
@@ -228,6 +242,11 @@ namespace SharedModule
             retCount = GetClassName(hWnd, buff, 256);
 
             return buff.ToString();
+        }
+
+        public static IntPtr GetAncestor(IntPtr hWnd, uint gaFlags)
+        {
+            return _GetAncestor(hWnd, gaFlags);
         }
 
         public static IntPtr FindParentWithClassName(IntPtr hWndChild, string className)

@@ -33,22 +33,25 @@
             // 
             // userControlWinForm1
             // 
+            this.userControlWinForm1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.userControlWinForm1.AutoScroll = true;
             this.userControlWinForm1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.userControlWinForm1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userControlWinForm1.Location = new System.Drawing.Point(0, 0);
-            this.userControlWinForm1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.userControlWinForm1.Location = new System.Drawing.Point(1, 1);
+            this.userControlWinForm1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.userControlWinForm1.MinimumSize = new System.Drawing.Size(317, 0);
             this.userControlWinForm1.Name = "userControlWinForm1";
-            this.userControlWinForm1.Size = new System.Drawing.Size(474, 985);
+            this.userControlWinForm1.Size = new System.Drawing.Size(764, 945);
             this.userControlWinForm1.TabIndex = 0;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(474, 985);
+            this.ClientSize = new System.Drawing.Size(846, 973);
             this.Controls.Add(this.userControlWinForm1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "DDPI top-level form";
             this.Load += new System.EventHandler(this.Form1_Load);

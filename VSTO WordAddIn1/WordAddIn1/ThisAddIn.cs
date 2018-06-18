@@ -1,5 +1,4 @@
 ﻿using SharedModule;
-using Microsoft.Office.Tools;
 
 namespace WordAddIn1
 {

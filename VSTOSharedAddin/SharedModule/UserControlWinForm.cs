@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Tools;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
@@ -9,14 +10,16 @@ namespace SharedModule
     public partial class UserControlWinForm : UserControl
     {
         private System.Windows.Forms.Timer refreshTimer = new System.Windows.Forms.Timer();
+        private CustomTaskPane m_customTaskPane = null;
 
         private void RefreshValues()
         {
-            if (!this.Visible) return;
+            if (!this.Visible || this.Disposing) return;
 
             IntPtr hWndHost = Process.GetCurrentProcess().MainWindowHandle;
             IntPtr hWndTaskpane = this.Handle;
             IntPtr hWndContainer = DPIHelper.FindParentWithClassName(hWndTaskpane, "MsoCommandBar");
+            IntPtr hWndTaskpaneHost = DPIHelper.FindParentWithClassName(hWndTaskpane, "CMMOcxHostChildWindowMixedMode");
 
             this.txtThreadAwareness.Text = DPIHelper.GetThreadDpiAwareness().ToString();
             this.txtProcessAwareness.Text = DPIHelper.GetProcessDpi().ToString();
@@ -31,21 +34,36 @@ namespace SharedModule
                 DPIHelper.GetWindowDpiAwareness(hWndHost).ToString();
 
             this.txtChildWindowMixedMode.Text =
-                DPIHelper.GetChildWindowMixedMode(this.Handle).ToString();
+                DPIHelper.GetThreadDpiHostingBehavior(hWndTaskpaneHost).ToString();
 
             this.txtTaskpaneRect.Text = HwndInfoString(hWndTaskpane);
             this.txtContainerRect.Text = HwndInfoString(hWndContainer);
+
+            if (m_customTaskPane != null)
+            {
+                this.txtGetWidthHeight.Text = string.Format("{0}, {1}", m_customTaskPane.Width, m_customTaskPane.Height);
+            }
         }
 
         private string HwndInfoString(IntPtr hWnd)
         {
-            RECT r = DPIHelper.GetWindowRectangle(hWnd);
+            RECT rSA;
+            RECT rPMA;
 
-            return String.Format("{0},{1} ({2:X}) (Parent {3:X})",
-            (r.right - r.left).ToString(),
-            (r.bottom - r.top).ToString(),
-            hWnd.ToInt64(),
-            DPIHelper.GetParentWindow(hWnd).ToInt64());
+            {
+                DPIContextBlock saBlock = new DPIContextBlock(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
+                rSA = DPIHelper.GetWindowRectangle(hWnd);
+            }
+            {
+                DPIContextBlock saBlock = new DPIContextBlock(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+                rPMA = DPIHelper.GetWindowRectangle(hWnd);
+            }
+
+            return String.Format("SA: {0}, {1} PMA: {2}, {3}",
+            (rSA.right - rSA.left).ToString(),
+            (rSA.bottom - rSA.top).ToString(),
+            (rPMA.right - rPMA.left).ToString(),
+            (rPMA.bottom - rPMA.top).ToString());
         }
 
         public UserControlWinForm()
@@ -54,44 +72,55 @@ namespace SharedModule
             // Setup timer callback
             refreshTimer.Tick += (Object o, EventArgs e) => RefreshValues();
             refreshTimer.Interval = 1000;
+
+            cboNewDockLocation.DataSource = Enum.GetValues(typeof(Microsoft.Office.Core.MsoCTPDockPosition));
+            cboDpiContext.DataSource = DpiAwarenessContexts;
+
             AutoRefreshValues(true);
         }
 
-        public void InitTaskpanes(TaskPanes tpc)
+        public void SetCustomTaskpane(ref CustomTaskPane ctp)
         {
-            SharedApp.AppTaskPanes = tpc;
+            m_customTaskPane = ctp;
         }
 
-        private void btnSATaskpane_Click(object sender, EventArgs e)
+        private DPI_AWARENESS_CONTEXT GetSelectedDpiAwarenessContext()
         {
-            SetThreadDPI(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
-            SharedApp.AppTaskPanes.CreateTaskpaneInstance();
+            int index = Array.FindIndex(DpiAwarenessContexts, match => match.Equals(cboDpiContext.SelectedValue.ToString()));
+            if (index >= 0)
+            {
+                return DpiAwarenessContexts[index];
+            }
+            return DPI_AWARENESS_CONTEXT_SYSTEM_AWARE;
         }
 
-        private void btnSAForm_Click(object sender, EventArgs e)
+        private void CreateNewTaskpane()
         {
-            SetThreadDPI(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
+            int width = 0;
+            int height = 0;
+            Microsoft.Office.Core.MsoCTPDockPosition dock;
+
+            if (!Enum.TryParse<Microsoft.Office.Core.MsoCTPDockPosition>(cboNewDockLocation.SelectedValue.ToString(), out dock))
+            {
+                dock = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionRight;
+            }
+            Int32.TryParse(txtSetWidth.Text, out width);
+            Int32.TryParse(txtSetHeight.Text, out height);
+
+            SharedApp.AppTaskPanes.CreateTaskpaneInstance(width, height, dock);
+        }
+
+
+        private void btnAddTaskpane_Click(object sender, EventArgs e)
+        {
+            CreateNewTaskpane();
+        }
+
+        private void btnTopLevelForm_Click(object sender, EventArgs e)
+        {
+            DPIContextBlock context = new DPIContextBlock(GetSelectedDpiAwarenessContext());
             Form f1 = new Form1();
             f1.Show();
-        }
-
-        private void btnCreatePMAV2Taskpane_Click(object sender, EventArgs e)
-        {
-            SetThreadDPI(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2, false);
-            SharedApp.AppTaskPanes.CreateTaskpaneInstance();
-        }
-
-        private void btnOpenNonModalSA_Click(object sender, EventArgs e)
-        {
-            SetThreadDPI(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE, false);
-            Form f1 = new Form1();
-            f1.Show();
-        }
-
-        private void btnSetCWMM_Click(object sender, EventArgs e)
-        {
-            DPIHelper.SetChildWindowMixedMode(DPIHelper.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED);
-            // MessageBox.Show(String.Format("DPI Hosting Behavior is {0}", DPIHelper.GetChildWindowMixedMode(this.Handle).ToString()));
         }
 
         private void AutoRefreshValues(bool start)
@@ -137,6 +166,80 @@ namespace SharedModule
         private void UserControlWinForm_Resize(object sender, EventArgs e)
         {
             RefreshValues();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void elementHost1_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSetHeight_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSetHeight_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                int height = m_customTaskPane.Height;
+                if (int.TryParse(txtSetHeight.Text, out height))
+                {
+                    try
+                    {
+                        m_customTaskPane.Height = height;
+                    }
+                    catch (System.Runtime.InteropServices.COMException except)
+                    {
+                        MessageBox.Show(except.Message);
+                    }
+                }
+            }
+        }
+
+        private void txtSetWidth_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSetWidth_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                int width = m_customTaskPane.Width;
+                if (int.TryParse(txtSetWidth.Text, out width))
+                {
+                    try
+                    {
+                        m_customTaskPane.Width = width;
+                    }
+                    catch (System.Runtime.InteropServices.COMException except)
+                    {
+                        MessageBox.Show(except.Message);
+                    }
+            }
+        }
+
         }
     }
 }

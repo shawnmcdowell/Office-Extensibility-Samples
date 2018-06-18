@@ -30,8 +30,8 @@ namespace VSTOSharedAddin
         {
             InitializeComponent();
             // Setup timer callback
-            refreshTimer.Tick += (Object o, EventArgs e) => RefreshValues();
-            refreshTimer.Interval = 1000;
+            //refreshTimer.Tick += (Object o, EventArgs e) => RefreshValues();
+            //refreshTimer.Interval = 1000;
         }
 
         private void btnSetThreadSA_Click(object sender, EventArgs e)
