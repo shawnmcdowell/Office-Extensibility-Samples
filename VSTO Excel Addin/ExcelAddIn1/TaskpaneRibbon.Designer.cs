@@ -57,8 +57,12 @@
             // 
             // buttonAddTaskpane
             // 
+            this.buttonAddTaskpane.Image = global::ExcelAddIn1.Properties.Resources.PlusIcon;
             this.buttonAddTaskpane.Label = "Add Taskpane";
             this.buttonAddTaskpane.Name = "buttonAddTaskpane";
+            this.buttonAddTaskpane.ScreenTip = "Add a new taskpane";
+            this.buttonAddTaskpane.ShowImage = true;
+            this.buttonAddTaskpane.SuperTip = "Add a new default taskpane to the right dock, 700px wide.";
             this.buttonAddTaskpane.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonAddTaskpane_Click);
             // 
             // buttonCloseAllTaskpanes

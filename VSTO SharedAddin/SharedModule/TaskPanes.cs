@@ -51,11 +51,29 @@ namespace SharedModule
                 MessageBox.Show(except.Message);
             }
 
-            customTaskpane.Visible = true;
-            userControl.SetCustomTaskpane(ref customTaskpane);
-        }
+			customTaskpane.DockPositionChanged += new System.EventHandler(CustomTaskPaneDockChangeHandler);
 
-        public void CloseAllTaskpanes()
+			customTaskpane.Visible = true;
+			// Set a ref to the custom taskpane if the method exists
+			try
+			{
+				userControl.SetCustomTaskpane(ref customTaskpane);
+			}
+			catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+			{
+			}
+
+		}
+
+		private void CustomTaskPaneDockChangeHandler(object sender, EventArgs e)
+		{
+			CustomTaskPane ctp = (CustomTaskPane)sender;
+
+			MessageBox.Show(string.Format("CustomTaskPane DockChange {0} with DpiThreadAwarenessContext {1}", ctp.DockPosition, DPIHelper.GetThreadDpiAwarenessContext().ToString()));
+		}
+
+
+		public void CloseAllTaskpanes()
         {
             int count = m_tpc.Count;
             for (int i = 0; i < count; i++)

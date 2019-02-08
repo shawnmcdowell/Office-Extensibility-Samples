@@ -179,7 +179,7 @@ namespace OutlookAddIn1 {
         private static global::Microsoft.Office.Tools.Outlook.Factory _factory;
         
         private static ThisRibbonCollection _ThisRibbonCollection;
-
+        
         private static ThisFormRegionCollection _ThisFormRegionCollection;
         
         internal static ThisAddIn ThisAddIn {

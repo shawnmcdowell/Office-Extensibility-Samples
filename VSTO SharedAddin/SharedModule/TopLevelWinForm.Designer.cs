@@ -39,19 +39,18 @@
             this.userControlWinForm1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.userControlWinForm1.MinimumSize = new System.Drawing.Size(317, 0);
             this.userControlWinForm1.Name = "userControlWinForm1";
-            this.userControlWinForm1.Size = new System.Drawing.Size(434, 398);
+            this.userControlWinForm1.Size = new System.Drawing.Size(439, 453);
             this.userControlWinForm1.TabIndex = 0;
             // 
             // TopLevelWinForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 398);
+            this.ClientSize = new System.Drawing.Size(439, 453);
             this.Controls.Add(this.userControlWinForm1);
             this.Name = "TopLevelWinForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "DDPI top-level form";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }

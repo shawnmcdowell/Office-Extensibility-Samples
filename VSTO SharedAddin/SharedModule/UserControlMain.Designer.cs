@@ -31,6 +31,10 @@ namespace SharedModule
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtAppWindowDpi = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtTaskpaneWindowDpi = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtGetWidthHeight = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -62,12 +66,17 @@ namespace SharedModule
             this.label10 = new System.Windows.Forms.Label();
             this.cboDpiContext = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.txtAppWindowDpi);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.txtTaskpaneWindowDpi);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.txtGetWidthHeight);
             this.groupBox1.Controls.Add(this.label7);
@@ -86,15 +95,53 @@ namespace SharedModule
             this.groupBox1.Controls.Add(this.txtThreadAwareness);
             this.groupBox1.Location = new System.Drawing.Point(11, 173);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(410, 214);
+            this.groupBox1.Size = new System.Drawing.Size(410, 263);
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dynamic Dpi Info";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(7, 71);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(87, 13);
+            this.label15.TabIndex = 49;
+            this.label15.Text = "App Window Dpi";
+            // 
+            // txtAppWindowDpi
+            // 
+            this.txtAppWindowDpi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAppWindowDpi.Location = new System.Drawing.Point(178, 71);
+            this.txtAppWindowDpi.Name = "txtAppWindowDpi";
+            this.txtAppWindowDpi.Size = new System.Drawing.Size(226, 20);
+            this.txtAppWindowDpi.TabIndex = 48;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(7, 96);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(116, 13);
+            this.label14.TabIndex = 47;
+            this.label14.Text = "Taskpane Window Dpi";
+            // 
+            // txtTaskpaneWindowDpi
+            // 
+            this.txtTaskpaneWindowDpi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTaskpaneWindowDpi.Location = new System.Drawing.Point(178, 96);
+            this.txtTaskpaneWindowDpi.Name = "txtTaskpaneWindowDpi";
+            this.txtTaskpaneWindowDpi.Size = new System.Drawing.Size(226, 20);
+            this.txtTaskpaneWindowDpi.TabIndex = 46;
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 183);
+            this.label8.Location = new System.Drawing.Point(7, 232);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(78, 13);
@@ -105,7 +152,7 @@ namespace SharedModule
             // 
             this.txtGetWidthHeight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtGetWidthHeight.Location = new System.Drawing.Point(178, 183);
+            this.txtGetWidthHeight.Location = new System.Drawing.Point(178, 232);
             this.txtGetWidthHeight.Name = "txtGetWidthHeight";
             this.txtGetWidthHeight.Size = new System.Drawing.Size(226, 20);
             this.txtGetWidthHeight.TabIndex = 44;
@@ -113,7 +160,7 @@ namespace SharedModule
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 116);
+            this.label7.Location = new System.Drawing.Point(7, 165);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(143, 13);
@@ -124,7 +171,7 @@ namespace SharedModule
             // 
             this.txtChildWindowMixedMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtChildWindowMixedMode.Location = new System.Drawing.Point(178, 116);
+            this.txtChildWindowMixedMode.Location = new System.Drawing.Point(178, 165);
             this.txtChildWindowMixedMode.Name = "txtChildWindowMixedMode";
             this.txtChildWindowMixedMode.Size = new System.Drawing.Size(226, 20);
             this.txtChildWindowMixedMode.TabIndex = 42;
@@ -132,7 +179,7 @@ namespace SharedModule
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 138);
+            this.label6.Location = new System.Drawing.Point(7, 187);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(110, 13);
@@ -143,7 +190,7 @@ namespace SharedModule
             // 
             this.txtContainerRect.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtContainerRect.Location = new System.Drawing.Point(178, 138);
+            this.txtContainerRect.Location = new System.Drawing.Point(178, 187);
             this.txtContainerRect.Name = "txtContainerRect";
             this.txtContainerRect.Size = new System.Drawing.Size(226, 20);
             this.txtContainerRect.TabIndex = 40;
@@ -151,7 +198,7 @@ namespace SharedModule
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 161);
+            this.label5.Location = new System.Drawing.Point(7, 210);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(75, 13);
@@ -162,7 +209,7 @@ namespace SharedModule
             // 
             this.txtTaskpaneRect.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTaskpaneRect.Location = new System.Drawing.Point(178, 161);
+            this.txtTaskpaneRect.Location = new System.Drawing.Point(178, 210);
             this.txtTaskpaneRect.Name = "txtTaskpaneRect";
             this.txtTaskpaneRect.Size = new System.Drawing.Size(226, 20);
             this.txtTaskpaneRect.TabIndex = 38;
@@ -170,7 +217,7 @@ namespace SharedModule
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 93);
+            this.label4.Location = new System.Drawing.Point(7, 142);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(123, 13);
@@ -180,7 +227,7 @@ namespace SharedModule
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 70);
+            this.label3.Location = new System.Drawing.Point(7, 119);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(152, 13);
@@ -190,28 +237,28 @@ namespace SharedModule
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 47);
+            this.label2.Location = new System.Drawing.Point(7, 24);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 13);
+            this.label2.Size = new System.Drawing.Size(119, 13);
             this.label2.TabIndex = 35;
-            this.label2.Text = "Process Awareness";
+            this.label2.Text = "Process Dpi Awareness";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 23);
+            this.label1.Location = new System.Drawing.Point(7, 47);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 13);
+            this.label1.Size = new System.Drawing.Size(154, 13);
             this.label1.TabIndex = 34;
-            this.label1.Text = "Thread Awareness";
+            this.label1.Text = "Thread Dpi Awareness Context";
             // 
             // txtHostWindowAwareness
             // 
             this.txtHostWindowAwareness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHostWindowAwareness.Location = new System.Drawing.Point(178, 93);
+            this.txtHostWindowAwareness.Location = new System.Drawing.Point(178, 142);
             this.txtHostWindowAwareness.Name = "txtHostWindowAwareness";
             this.txtHostWindowAwareness.Size = new System.Drawing.Size(226, 20);
             this.txtHostWindowAwareness.TabIndex = 33;
@@ -220,7 +267,7 @@ namespace SharedModule
             // 
             this.txtTaskpaneWindowAwareness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTaskpaneWindowAwareness.Location = new System.Drawing.Point(178, 70);
+            this.txtTaskpaneWindowAwareness.Location = new System.Drawing.Point(178, 119);
             this.txtTaskpaneWindowAwareness.Name = "txtTaskpaneWindowAwareness";
             this.txtTaskpaneWindowAwareness.Size = new System.Drawing.Size(226, 20);
             this.txtTaskpaneWindowAwareness.TabIndex = 32;
@@ -229,22 +276,23 @@ namespace SharedModule
             // 
             this.txtProcessAwareness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtProcessAwareness.Location = new System.Drawing.Point(178, 47);
+            this.txtProcessAwareness.Location = new System.Drawing.Point(177, 24);
             this.txtProcessAwareness.Name = "txtProcessAwareness";
-            this.txtProcessAwareness.Size = new System.Drawing.Size(226, 20);
+            this.txtProcessAwareness.Size = new System.Drawing.Size(227, 20);
             this.txtProcessAwareness.TabIndex = 31;
             // 
             // txtThreadAwareness
             // 
             this.txtThreadAwareness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtThreadAwareness.Location = new System.Drawing.Point(178, 23);
+            this.txtThreadAwareness.Location = new System.Drawing.Point(178, 47);
             this.txtThreadAwareness.Name = "txtThreadAwareness";
             this.txtThreadAwareness.Size = new System.Drawing.Size(226, 20);
             this.txtThreadAwareness.TabIndex = 30;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.btnSetHeight);
             this.groupBox2.Controls.Add(this.btnSetWidth);
             this.groupBox2.Controls.Add(this.label13);
@@ -265,7 +313,6 @@ namespace SharedModule
             this.groupBox2.TabIndex = 41;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Create";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // btnSetHeight
             // 
@@ -313,7 +360,7 @@ namespace SharedModule
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(35, 13);
             this.label12.TabIndex = 49;
-            this.label12.Text = "Wdith";
+            this.label12.Text = "Width";
             // 
             // txtSetWidth
             // 
@@ -366,11 +413,10 @@ namespace SharedModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboNewDockLocation.FormattingEnabled = true;
             this.cboNewDockLocation.Location = new System.Drawing.Point(245, 54);
-            this.cboNewDockLocation.Margin = new System.Windows.Forms.Padding(1);
+            this.cboNewDockLocation.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.cboNewDockLocation.Name = "cboNewDockLocation";
             this.cboNewDockLocation.Size = new System.Drawing.Size(159, 21);
             this.cboNewDockLocation.TabIndex = 42;
-            this.cboNewDockLocation.TextUpdate += new System.EventHandler(this.cboNewDockLocation_TextUpdate);
             // 
             // label10
             // 
@@ -388,7 +434,7 @@ namespace SharedModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDpiContext.FormattingEnabled = true;
             this.cboDpiContext.Location = new System.Drawing.Point(245, 80);
-            this.cboDpiContext.Margin = new System.Windows.Forms.Padding(1);
+            this.cboDpiContext.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.cboDpiContext.Name = "cboDpiContext";
             this.cboDpiContext.Size = new System.Drawing.Size(159, 21);
             this.cboDpiContext.TabIndex = 44;
@@ -403,6 +449,16 @@ namespace SharedModule
             this.label9.TabIndex = 43;
             this.label9.Text = "Dock";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 80);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(101, 20);
+            this.button1.TabIndex = 54;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // UserControlMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -412,7 +468,7 @@ namespace SharedModule
             this.Controls.Add(this.groupBox1);
             this.MinimumSize = new System.Drawing.Size(317, 0);
             this.Name = "UserControlMain";
-            this.Size = new System.Drawing.Size(439, 407);
+            this.Size = new System.Drawing.Size(439, 453);
             this.Load += new System.EventHandler(this.UserControlWinForm_Load);
             this.Resize += new System.EventHandler(this.UserControlWinForm_Resize);
             this.groupBox1.ResumeLayout(false);
@@ -456,5 +512,10 @@ namespace SharedModule
         private System.Windows.Forms.TextBox txtSetWidth;
         private System.Windows.Forms.Button btnSetHeight;
         private System.Windows.Forms.Button btnSetWidth;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtTaskpaneWindowDpi;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txtAppWindowDpi;
+        private System.Windows.Forms.Button button1;
     }
 }

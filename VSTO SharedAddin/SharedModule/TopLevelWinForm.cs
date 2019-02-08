@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SharedModule
 {
-    public partial class TopLevelWinForm : Form
+    public partial class TopLevelWinForm : DpiAwareWindowsForm
     {
         public TopLevelWinForm(string userControlName)
         {
             InitializeComponent();
+            this.SuspendLayout();
             LoadUserControl(userControlName);
+            this.ResumeLayout(true);
         }
 
         public void LoadUserControl(string userControlName)
@@ -25,11 +30,6 @@ namespace SharedModule
 
             this.Controls.Add(userControlAdd);
             this.Controls.Remove(userControlCopy);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -8,9 +8,10 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SharedModule</RootNamespace>
     <AssemblyName>SharedModule</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,24 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -63,15 +82,39 @@
   <ItemGroup>
     <Compile Include="DPIContextBlock.cs" />
     <Compile Include="DPIHelper.cs" />
+    <Compile Include="DpiAwareWindowsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HtmlHelpHelper.cs" />
     <Compile Include="InputBox.cs" />
+    <Compile Include="ProcessCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RECT.cs" />
     <Compile Include="SharedApp.cs" />
     <Compile Include="SharedResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ShowHelp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ShowHelp.Designer.cs">
+      <DependentUpon>ShowHelp.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaskPanes.cs" />
+    <Compile Include="TempForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TempForm.Designer.cs">
+      <DependentUpon>TempForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Top Level Forms.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Top Level Forms.Designer.cs">
+      <DependentUpon>Top Level Forms.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlWBC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -114,6 +157,15 @@
       <SubType>Designer</SubType>
       <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ShowHelp.resx">
+      <DependentUpon>ShowHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TempForm.resx">
+      <DependentUpon>TempForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Top Level Forms.resx">
+      <DependentUpon>Top Level Forms.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControlWBC.resx">
       <DependentUpon>UserControlWBC.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,6 +187,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="samplehelp.chm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

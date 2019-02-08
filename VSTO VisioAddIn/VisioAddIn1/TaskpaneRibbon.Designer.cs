@@ -38,6 +38,7 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.buttonAddTaskpane = this.Factory.CreateRibbonButton();
             this.buttonCloseAllTaskpanes = this.Factory.CreateRibbonButton();
+            this.ribbonAddWindow = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +53,7 @@
             // 
             this.group1.Items.Add(this.buttonAddTaskpane);
             this.group1.Items.Add(this.buttonCloseAllTaskpanes);
+            this.group1.Items.Add(this.ribbonAddWindow);
             this.group1.Label = "DDPI Taskpanes";
             this.group1.Name = "group1";
             // 
@@ -66,6 +68,12 @@
             this.buttonCloseAllTaskpanes.Label = "Close All Taskpanes";
             this.buttonCloseAllTaskpanes.Name = "buttonCloseAllTaskpanes";
             this.buttonCloseAllTaskpanes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonCloseAllTaskpanes_Click);
+            // 
+            // ribbonAddWindow
+            // 
+            this.ribbonAddWindow.Label = "Windows.Add()";
+            this.ribbonAddWindow.Name = "ribbonAddWindow";
+            this.ribbonAddWindow.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ribbonAddWindow_Click);
             // 
             // TaskpaneRibbon
             // 
@@ -87,6 +95,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonAddTaskpane;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonCloseAllTaskpanes;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton ribbonAddWindow;
     }
 
     partial class ThisRibbonCollection

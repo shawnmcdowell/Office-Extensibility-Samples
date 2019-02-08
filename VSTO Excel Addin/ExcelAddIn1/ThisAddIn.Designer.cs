@@ -9,8 +9,8 @@
 //------------------------------------------------------------------------------
 
 #pragma warning disable 414
-namespace ExcelAddIn1
-{
+namespace ExcelAddIn1 {
+    
     
     /// 
     [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(0)]

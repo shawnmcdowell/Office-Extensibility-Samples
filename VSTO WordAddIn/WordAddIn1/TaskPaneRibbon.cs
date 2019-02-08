@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 using Microsoft.Office.Tools.Ribbon;
 using SharedModule;
 
@@ -9,7 +14,9 @@ namespace WordAddIn1
 {
     public partial class TaskPaneRibbon
     {
-        private void TaskPaneRibbon_Load(object sender, RibbonUIEventArgs e)
+		public Microsoft.Office.Interop.Word.Application WordApp;
+
+		private void TaskPaneRibbon_Load(object sender, RibbonUIEventArgs e)
         {
 
         }
@@ -23,5 +30,10 @@ namespace WordAddIn1
         {
             SharedApp.AppTaskPanes.CreateTaskpaneInstance();
         }
-    }
+
+		private void btnOpenHelpNewProcess_Click(object sender, RibbonControlEventArgs e)
+		{
+			SharedApp.View_Help(false);
+		}
+	}
 }

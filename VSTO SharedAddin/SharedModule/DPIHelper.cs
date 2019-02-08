@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -7,6 +8,60 @@ namespace SharedModule
 {
     public static class DPIHelper
     {
+        public enum WinMessages : int
+        {
+            WM_DPICHANGED = 0x02E0,
+            WM_GETMINMAXINFO = 0x0024,
+            WM_SIZE = 0x0005,
+            WM_WINDOWPOSCHANGING = 0x0046,
+            WM_WINDOWPOSCHANGED = 0x0047,
+        }
+        
+        // Was getting AVs using delegate function, switching to declared extern, which should be available back to Win 8.1
+        [DllImport("SHCore.dll", SetLastError = true, EntryPoint = "GetProcessDpiAwareness")]
+        private static extern void _GetProcessDpiAwareness(IntPtr hprocess, out DPI_AWARENESS awareness);
+
+        [DllImport("SHCore.dll", SetLastError = true, EntryPoint = "SetProcessDpiAwareness")]
+        private static extern IntPtr _SetProcessDpiAwareness(DPI_AWARENESS awareness);
+
+
+        #region Dynamic Dpi delegates
+        // User32.dll
+        private delegate DPI_AWARENESS_CONTEXT _SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT awareness);
+        private delegate DPI_AWARENESS_CONTEXT _GetThreadDpiAwarenessContext();
+        private delegate DPI_AWARENESS_CONTEXT _GetWindowDpiAwarenessContext(IntPtr hWnd);
+        private delegate DPI_AWARENESS _GetAwarenessFromDpiAwarenessContext(DPI_AWARENESS_CONTEXT value);
+        private delegate bool _AreDpiAwarenessContextsEqual(DPI_AWARENESS_CONTEXT valueA, DPI_AWARENESS_CONTEXT valueB);
+        private delegate DPI_HOSTING_BEHAVIOR _SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR dpiHostingBehavior);
+        private delegate DPI_HOSTING_BEHAVIOR _GetThreadDpiHostingBehavior();
+        private delegate DPI_HOSTING_BEHAVIOR _GetWindowDpiHostingBehavior(IntPtr hWnd);
+        #endregion
+
+        #region Other External Apis
+        [DllImport("user32.dll", EntryPoint = "GetDpiForWindow")]
+        private static extern uint _GetDpiForWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetParent(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern int GetClassName(IntPtr hWnd, StringBuilder className, int charCount);
+
+        [DllImport("user32.dll", EntryPoint = "GetAncestor")]
+        private static extern IntPtr _GetAncestor(IntPtr hWnd, uint gaFlags);
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr LoadLibrary(string dllToLoad);
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, string procedureName);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool FreeLibrary(IntPtr hModule);
+        #endregion
+
         public struct DPI_AWARENESS_CONTEXT
         {
             private IntPtr value;
@@ -100,7 +155,6 @@ namespace SharedModule
             DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
         };
 
-
         public enum DPI_AWARENESS
         {
             DPI_AWARENESS_INVALID = -1,
@@ -109,57 +163,20 @@ namespace SharedModule
             DPI_AWARENESS_PER_MONITOR_AWARE = 2
         }
 
-        public enum DPI_HOSTING_BEHAVIOR
+		public static DPI_HOSTING_BEHAVIOR[] DpiHostingBehaviors =
+		{
+			DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_DEFAULT,
+			DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED
+		};
+
+		public enum DPI_HOSTING_BEHAVIOR
         {
             DPI_HOSTING_BEHAVIOR_INVALID = -1,
             DPI_HOSTING_BEHAVIOR_DEFAULT = 0,
             DPI_HOSTING_BEHAVIOR_MIXED = 1
         }
-        public struct RECT
-        {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
-        }
 
         public const uint GA_ROOT = 2;
-
-        #region Dynamic Dpi delegates
-        // SHCore.dll
-        private delegate void _GetProcessDpiAwareness(IntPtr hprocess, out DPI_AWARENESS awareness);
-
-        // User32.dll
-        private delegate DPI_AWARENESS_CONTEXT _SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT awareness);
-        private delegate DPI_AWARENESS_CONTEXT _GetThreadDpiAwarenessContext();
-        private delegate DPI_AWARENESS_CONTEXT _GetWindowDpiAwarenessContext(IntPtr hWnd);
-        private delegate DPI_AWARENESS _GetAwarenessFromDpiAwarenessContext(DPI_AWARENESS_CONTEXT value);
-        private delegate bool _AreDpiAwarenessContextsEqual(DPI_AWARENESS_CONTEXT valueA, DPI_AWARENESS_CONTEXT valueB);
-        private delegate DPI_HOSTING_BEHAVIOR _SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR dpiHostingBehavior);
-        private delegate DPI_HOSTING_BEHAVIOR _GetThreadDpiHostingBehavior(IntPtr hWnd);
-        #endregion
-
-        #region Other External Apis
-        [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetParent(IntPtr hWnd);
-
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        private static extern int GetClassName(IntPtr hWnd, StringBuilder className, int charCount);
-
-        [DllImport("user32.dll", EntryPoint = "GetAncestor")]
-        private static extern IntPtr _GetAncestor(IntPtr hWnd, uint gaFlags);
-        [DllImport("kernel32.dll")]
-        public static extern IntPtr LoadLibrary(string dllToLoad);
-
-        [DllImport("kernel32.dll")]
-        public static extern IntPtr GetProcAddress(IntPtr hModule, string procedureName);
-
-        [DllImport("kernel32.dll")]
-        public static extern bool FreeLibrary(IntPtr hModule);
-        #endregion
 
         private static T GetDelegatedFunction<T>(string library, string entrypoint)
         {
@@ -182,17 +199,26 @@ namespace SharedModule
             return pFunction(context);
         }
 
-        public static DPI_AWARENESS GetProcessDpi()
+        public static DPI_AWARENESS GetProcessDpiAwareness()
         {
-            var pFunction = GetDelegatedFunction<_GetProcessDpiAwareness>("SHCore.dll", "GetProcessDpiAwareness");
-            if (pFunction == null)
-                return DPI_AWARENESS.DPI_AWARENESS_INVALID;
-            DPI_AWARENESS result;
-            pFunction(Process.GetCurrentProcess().Handle, out result);
+            DPI_AWARENESS result = DPI_AWARENESS.DPI_AWARENESS_INVALID;
+            IntPtr pid = Process.GetCurrentProcess().Handle;
+            try
+            {
+                _GetProcessDpiAwareness(pid, out result);
+            }
+            catch (Exception)
+            {
+            }
             return result;
         }
 
-        public static DPI_AWARENESS_CONTEXT GetThreadDpiAwareness()
+        public static IntPtr SetProcessDpiAwareness(DPI_AWARENESS awareness)
+        {
+            return _SetProcessDpiAwareness(awareness);
+        }
+
+        public static DPI_AWARENESS_CONTEXT GetThreadDpiAwarenessContext()
         {
             var pFunction = GetDelegatedFunction<_GetThreadDpiAwarenessContext>("user32.dll", "GetThreadDpiAwarenessContext");
             if (pFunction == null)
@@ -224,12 +250,32 @@ namespace SharedModule
             return pFunction(value);
         }
 
-        public static DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior(IntPtr hWnd)
+        public static DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior()
         {
             var pFunction = GetDelegatedFunction<_GetThreadDpiHostingBehavior>("user32.dll", "GetThreadDpiHostingBehavior");
             if (pFunction == null)
                 return DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_INVALID;
+            return pFunction();
+        }
+
+        public static DPI_HOSTING_BEHAVIOR GetWindowDpiHostingBehavior(IntPtr hWnd)
+        {
+            var pFunction = GetDelegatedFunction<_GetWindowDpiHostingBehavior>("user32.dll", "GetWindowDpiHostingBehavior");
+            if (pFunction == null)
+                return DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_INVALID;
             return pFunction(hWnd);
+        }
+
+        public static uint GetDpiForWindow(IntPtr hWnd)
+        {
+            return _GetDpiForWindow(hWnd);
+        }
+        public static SizeF GetDpiForWindowSizeF(IntPtr hWnd)
+        {
+            SizeF scaleFactor = SizeF.Empty;
+            scaleFactor.Height =  scaleFactor.Width = (float)_GetDpiForWindow(hWnd);
+
+            return scaleFactor;
         }
 
         public static RECT GetWindowRectangle(IntPtr hWnd)

@@ -1,17 +1,29 @@
 ﻿using SharedModule;
+using System.Windows.Forms;
 
 namespace VisioAddIn1
 {
     public partial class ThisAddIn
     {
-        private void ThisAddIn_Startup(object sender, System.EventArgs e)
+		public Microsoft.Office.Interop.Visio.Application VisioApp;
+		private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            // Custom taskpanes not available in Visio
-            // SharedApp.InitAppTaskPanes(ref this.CustomTaskPanes);
-            // SharedApp.AppTaskPanes.CreateTaskpaneInstance();
-        }
+			VisioApp = Globals.ThisAddIn.Application;
 
-        private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
+			SharedApp.HostApp = Globals.ThisAddIn.Application;
+			// Custom taskpanes not available in Visio
+			// SharedApp.InitAppTaskPanes(ref this.CustomTaskPanes);
+			// SharedApp.AppTaskPanes.CreateTaskpaneInstance();
+
+			VisioApp.DocumentOpened += new Microsoft.Office.Interop.Visio.EApplication_DocumentOpenedEventHandler(Visio_DocOpened);
+		}
+
+		private void Visio_DocOpened(Microsoft.Office.Interop.Visio.Document doc)
+		{
+			MessageBox.Show(string.Format("DocOpened {0} with DpiThreadAwarenessContext {1}", doc.Name, DPIHelper.GetThreadDpiAwarenessContext().ToString()));
+		}
+
+		private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
         }
 

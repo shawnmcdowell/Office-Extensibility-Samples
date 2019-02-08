@@ -20,30 +20,42 @@ namespace SharedModule
 
         private void RefreshValues()
         {
-            if (!this.Visible || this.Disposing) return;
+            if (!this.Visible || this.Disposing || this.IsDisposed) return;
 
             IntPtr hWndHost = Process.GetCurrentProcess().MainWindowHandle;
-            IntPtr hWndTaskpane = this.Handle;
-            IntPtr hWndContainer = DPIHelper.FindParentWithClassName(hWndTaskpane, "MsoCommandBar");
-            IntPtr hWndTaskpaneHost = DPIHelper.FindParentWithClassName(hWndTaskpane, "CMMOcxHostChildWindowMixedMode");
+            IntPtr hWndTaskpane = IntPtr.Zero;
+            try
+            {
+	            hWndTaskpane = this.Handle;
+            }
+            catch(System.ObjectDisposedException)
+            {
+            }
 
-            this.txtThreadAwareness.Text = DPIHelper.GetThreadDpiAwareness().ToString();
-            this.txtProcessAwareness.Text = DPIHelper.GetProcessDpi().ToString();
+            IntPtr hWndContainer = FindParentWithClassName(hWndTaskpane, "MsoCommandBar");
+            IntPtr hWndTaskpaneHost = FindParentWithClassName(hWndTaskpane, "CMMOcxHostChildWindowMixedMode");
+
+            this.txtThreadAwareness.Text = GetThreadDpiAwarenessContext().ToString();
+            this.txtProcessAwareness.Text = GetProcessDpiAwareness().ToString();
 
             if (this.Handle != null)
             {
                 this.txtTaskpaneWindowAwareness.Text =
-                    DPIHelper.GetWindowDpiAwarenessContext(this.Handle).ToString();
+                    GetWindowDpiAwarenessContext(this.Handle).ToString();
             }
 
             this.txtHostWindowAwareness.Text = 
-                DPIHelper.GetWindowDpiAwarenessContext(hWndHost).ToString();
+                GetWindowDpiAwarenessContext(hWndHost).ToString();
 
             this.txtChildWindowMixedMode.Text =
-                DPIHelper.GetThreadDpiHostingBehavior(hWndTaskpaneHost).ToString();
+                GetWindowDpiHostingBehavior(hWndTaskpaneHost).ToString();
 
             this.txtTaskpaneRect.Text = HwndInfoString(hWndTaskpane);
             this.txtContainerRect.Text = HwndInfoString(hWndContainer);
+            uint dpiTaskpane = GetDpiForWindow(hWndTaskpane);
+            uint dpiApp = GetDpiForWindow(hWndHost);
+            this.txtTaskpaneWindowDpi.Text = String.Format("{0} ({1:P0})", dpiTaskpane, dpiTaskpane / 96.0);
+            this.txtAppWindowDpi.Text = String.Format("{0} ({1:P0})", dpiApp, dpiApp / 96.0);
 
             if (m_customTaskPane != null)
             {
@@ -58,18 +70,18 @@ namespace SharedModule
 
             {
                 DPIContextBlock saBlock = new DPIContextBlock(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
-                rSA = DPIHelper.GetWindowRectangle(hWnd);
+                rSA = GetWindowRectangle(hWnd);
             }
             {
-                DPIContextBlock saBlock = new DPIContextBlock(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
-                rPMA = DPIHelper.GetWindowRectangle(hWnd);
+                DPIContextBlock pmaBlock = new DPIContextBlock(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+                rPMA = GetWindowRectangle(hWnd);
             }
 
             return String.Format("SA: {0}, {1} PMA: {2}, {3}",
-            (rSA.right - rSA.left).ToString(),
-            (rSA.bottom - rSA.top).ToString(),
-            (rPMA.right - rPMA.left).ToString(),
-            (rPMA.bottom - rPMA.top).ToString());
+                rSA.Width.ToString(),
+                rSA.Height.ToString(),
+                rPMA.Width.ToString(),
+                rPMA.Height.ToString());
         }
 
         public UserControlMain()
@@ -88,7 +100,13 @@ namespace SharedModule
                 {
                     cboTemplate.Items.Add(type.Name);
                 }
-            cboTemplate.Text = cboTemplate.Items[0].ToString();
+
+            cboTemplate.Text = this.Name;
+            if (this.Handle != null)
+            {
+                cboDpiContext.Text =
+                    GetWindowDpiAwarenessContext(this.Handle).ToString();
+            }
 
             AutoRefreshValues(true);
         }
@@ -136,7 +154,7 @@ namespace SharedModule
         private void btnTopLevelForm_Click(object sender, EventArgs e)
         {
             DPIContextBlock context = new DPIContextBlock(GetSelectedDpiAwarenessContext());
-            Form f1 = new TopLevelWinForm(cboTemplate.Text);
+            TopLevelWinForm f1 = new TopLevelWinForm(cboTemplate.Text);
             f1.Show();
         }
 
@@ -159,7 +177,7 @@ namespace SharedModule
         private void SetThreadDPI(DPI_AWARENESS_CONTEXT newvalue, bool showMessage)
         {
             DPI_AWARENESS_CONTEXT previous =
-                DPIHelper.SetThreadDpiAwarenessContext(newvalue);
+                SetThreadDpiAwarenessContext(newvalue);
             int processId = Process.GetCurrentProcess().Id;
             int threadId = Thread.CurrentThread.ManagedThreadId;
             if (showMessage)
@@ -170,8 +188,8 @@ namespace SharedModule
 
         private void setCWMMNormal_Click(object sender, EventArgs e)
         {
-            DPIHelper.SetThreadDpiHostingBehavior(DPIHelper.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_DEFAULT);
-            // MessageBox.Show(String.Format("DPI Hosting Behavior is {0}", DPIHelper.GetChildWindowMixedMode(this.Handle).ToString()));
+            SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_DEFAULT);
+            // MessageBox.Show(String.Format("DPI Hosting Behavior is {0}", GetChildWindowMixedMode(this.Handle).ToString()));
 
         }
 
@@ -185,33 +203,10 @@ namespace SharedModule
             RefreshValues();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void elementHost1_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void SetWidth(object sender, EventArgs e)
         {
+            if (m_customTaskPane == null) return;
+
             int width = m_customTaskPane.Width;
             if (int.TryParse(txtSetWidth.Text, out width))
             {
@@ -228,6 +223,8 @@ namespace SharedModule
 
         private void SetHeight(object sender, EventArgs e)
         {
+            if (m_customTaskPane == null) return;
+
             int Height = m_customTaskPane.Height;
             if (int.TryParse(txtSetHeight.Text, out Height))
             {
@@ -242,19 +239,11 @@ namespace SharedModule
             }
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("foo");
-        }
-
-        private void cboNewDockLocation_TextUpdate(object sender, EventArgs e)
-        {
-
+            DPIContextBlock context = new DPIContextBlock(GetSelectedDpiAwarenessContext());
+            TempForm frm = new TempForm();
+            frm.Show();
         }
     }
 }
